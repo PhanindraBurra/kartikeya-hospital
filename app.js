@@ -1,17 +1,19 @@
 /**
  * SATYA SRI KARTIKEYA MULTI SPECIALITY HOSPITAL
- * Interactive Application Scripts
+ * Interactive Application Scripts (Delta Hospitals Inspired Standard)
  * ----------------------------------------------------
  * Features:
- * 1. AI / Hospital Virtual Assistant Chatbox (English & Telugu)
- * 2. Instant Appointment Booking with WhatsApp dispatch
- * 3. Free Health Camp Appointment Scheduler
- * 4. Image Lightbox for Official Hospital Posters & Gallery
- * 5. Dynamic Bilingual Switcher (English <-> Telugu)
- * 6. Smooth Mobile Navigation & Quick Actions
+ * 1. IntersectionObserver Scroll Reveal Animations (fade-up, fade-left, fade-right, zoom-in)
+ * 2. Doctor Specialty Category Filter Tabs (Gynecology, Medicine, Pediatrics, Orthopedics, Radiology, Surgery)
+ * 3. AI / Hospital Virtual Assistant Chatbox (Bilingual Telugu & English)
+ * 4. Instant Appointment Booking with WhatsApp dispatch to +91 9391131013
+ * 5. Free Health Camp Appointment Scheduler
+ * 6. Lightbox for Official Posters & Brochures
+ * 7. Dynamic Bilingual Switcher (English <-> Telugu)
+ * 8. Responsive Mobile Navigation
  */
 
-// Global Configuration
+// Global Hospital Configuration
 const HOSPITAL_PHONE = '9391131013';
 const HOSPITAL_PHONE_INTL = '919391131013';
 const HOSPITAL_NAME_EN = 'Satya Sri Kartikeya Multi Speciality Hospital';
@@ -19,6 +21,8 @@ const HOSPITAL_NAME_TE = 'సత్యశ్రీ కార్తికేయ �
 const GOOGLE_MAPS_LINK = 'https://share.google/5C07fv22zy8TrJrzH';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initScrollAnimations();
+  initDoctorFilter();
   initMobileNav();
   initLanguageSwitcher();
   initBookingSystem();
@@ -28,7 +32,66 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. MOBILE NAVIGATION
+   1. SCROLL REVEAL ANIMATIONS (IntersectionObserver)
+   ========================================================================== */
+function initScrollAnimations() {
+  const animatedElements = document.querySelectorAll(
+    '.reveal-fade-up, .reveal-fade-left, .reveal-fade-right, .reveal-zoom-in'
+  );
+
+  if (!('IntersectionObserver' in window)) {
+    // Fallback if IntersectionObserver is not supported
+    animatedElements.forEach(el => el.classList.add('reveal-active'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -40px 0px',
+    threshold: 0.12
+  });
+
+  animatedElements.forEach(el => observer.observe(el));
+}
+
+/* ==========================================================================
+   2. DOCTOR SPECIALTY FILTER TABS
+   ========================================================================== */
+function initDoctorFilter() {
+  const filterBtns = document.querySelectorAll('.filter-tab-btn');
+  const doctorCards = document.querySelectorAll('.doctor-card');
+
+  if (!filterBtns.length || !doctorCards.length) return;
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-filter');
+
+      doctorCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filterValue === 'all' || category === filterValue) {
+          card.style.display = 'flex';
+          card.classList.add('reveal-active');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   3. MOBILE NAVIGATION
    ========================================================================== */
 function initMobileNav() {
   const toggleBtn = document.getElementById('mobileNavToggle');
@@ -41,7 +104,7 @@ function initMobileNav() {
       toggleBtn.innerHTML = isOpen ? '✕' : '☰';
     });
 
-    // Close when clicking nav links
+    // Close menu when clicking nav links
     navMenu.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -52,9 +115,9 @@ function initMobileNav() {
 }
 
 /* ==========================================================================
-   2. BILINGUAL LANGUAGE SWITCHER (English <-> Telugu)
+   4. BILINGUAL LANGUAGE SWITCHER (English <-> Telugu)
    ========================================================================== */
-let currentLang = 'te'; // Telugu default as requested by regional demographic
+let currentLang = 'te'; // Telugu default for regional demographic
 
 function initLanguageSwitcher() {
   const switchBtn = document.getElementById('langSwitchBtn');
@@ -77,16 +140,11 @@ function initLanguageSwitcher() {
         el.textContent = enText;
       }
     });
-
-    // Also update chatbot greeting
-    if (window.chatUpdateGreeting) {
-      window.chatUpdateGreeting();
-    }
   });
 }
 
 /* ==========================================================================
-   3. APPOINTMENT BOOKING & WHATSAPP DISPATCH
+   5. APPOINTMENT BOOKING & WHATSAPP DISPATCH
    ========================================================================== */
 function initBookingSystem() {
   const bookingForm = document.getElementById('appointmentForm');
@@ -122,10 +180,10 @@ function initBookingSystem() {
       return;
     }
 
-    // Generate Token
+    // Generate Unique Token
     const token = 'KRT-' + Math.floor(100000 + Math.random() * 900000);
 
-    // Update modal
+    // Update modal elements
     document.getElementById('tokenVal').textContent = token;
     document.getElementById('tokenPatient').textContent = `${name} (${age || 'N/A'} yrs)`;
     document.getElementById('tokenDoctor').textContent = doctorName;
@@ -169,7 +227,7 @@ function initBookingSystem() {
       const waText = encodeURIComponent(
         `*నమస్తే కార్తికేయ హాస్పిటల్!*\nనేను డాక్టర్ *${doctorName}* గారి వద్ద అపాయింట్‌మెంట్ బుక్ చేసుకోవాలనుకుంటున్నాను.\n` +
         `👤 పేరు: ${name} (Age: ${age})\n` +
-        `📅 తేది: ${date}\n` +
+        `📅 తేదీ: ${date}\n` +
         `⏰ సమయం: ${timeSlot}\n` +
         `దయచేసి వివరాలు తెలియజేయగలరు.`
       );
@@ -195,11 +253,11 @@ function initBookingSystem() {
 }
 
 /* ==========================================================================
-   4. DOCTOR CARDS DIRECT BOOKING TRIGGER
+   6. DOCTOR CARDS DIRECT BOOKING TRIGGER
    ========================================================================== */
 function initDoctorBookingButtons() {
   document.querySelectorAll('.btn-doc-book').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const docName = btn.getAttribute('data-doctor');
       const docSelect = document.getElementById('bookDoctor');
       if (docSelect && docName) {
@@ -232,7 +290,7 @@ function initDoctorBookingButtons() {
 }
 
 /* ==========================================================================
-   5. AI / VIRTUAL ASSISTANT CHATBOX
+   7. AI / VIRTUAL ASSISTANT CHATBOX
    ========================================================================== */
 function initChatbox() {
   const launcher = document.getElementById('chatLauncher');
@@ -259,8 +317,8 @@ function initChatbox() {
   const knowledgeBase = [
     {
       keywords: ['doctor', 'specialist', 'డాక్టర్', 'వైద్యులు', 'లిస్ట్', 'డైరెక్టరీ', 'gynecologist', 'pediatrician', 'ortho', 'surgeon'],
-      replyEn: 'Our Hospital Doctors:\n• Dr. Surekha M.S., (OBG) - Gynecology & Maternity\n• Dr. Prashanth Kumar M.B.B.S., DNB - General Medicine & Critical Care\n• Dr. Masthan Vali Shaik M.B.B.S., DCH - Pediatrics & Child Specialist\n• Dr. Avinash M.S., Ortho - Bones & Joint Care\n• Dr. Moushmi MD - Radiologist & Ultrasound\n• Dr. S. Subbaraju M.S. - General & Laparoscopic Surgery\n\nWould you like to book an appointment with any doctor?',
-      replyTe: 'కార్తికేయ హాస్పిటల్ వైద్యుల జాబితా:\n• డా॥ సురేఖ M.S., (OBG) - గైనకాలజీ & ప్రసూతి\n• డా॥ ప్రశాంత్ కుమార్ M.B.B.S., DNB - జనరల్ మెడిసిన్ & క్రిటికల్ కేర్\n• డా॥ మస్తాన్ వలి షేక్ M.B.B.S., DCH - పీడియాట్రిక్స్ (చిన్నపిల్లల నిపుణులు)\n• డా॥ అవినాష్ M.S., Ortho - ఆర్థోపెడిక్స్ (ఎముకలు, కీళ్ళు)\n• డా॥ మౌషిమీ MD - రేడియాలజిస్ట్ (అల్ట్రాసౌండ్ స్కానింగ్)\n• డా॥ ఎస్. సుబ్బరాజు M.S. - జనరల్ & లాప్రోస్కోపిక్ సర్జరీ\n\nమీరు ఎవరి వద్ద అపాయింట్‌మెంట్ తీసుకోవాలనుకుంటున్నారు?'
+      replyEn: 'Our Senior Medical Specialists:\n• Dr. Surekha M.S., (OBG) - Gynecology & Maternity\n• Dr. Prashanth Kumar M.B.B.S., DNB - General Medicine & Critical Care\n• Dr. Masthan Vali Shaik M.B.B.S., DCH - Pediatrics & Child Specialist\n• Dr. Avinash M.S., Ortho - Bone & Joint Care\n• Dr. Moushmi MD - Radiologist & Ultrasound\n• Dr. S. Subbaraju M.S. - General & Laparoscopic Surgery\n\nWould you like to book an appointment?',
+      replyTe: 'కార్తికేయ హాస్పిటల్ నిపుణులైన వైద్యులు:\n• డా॥ సురేఖ M.S., (OBG) - గైనకాలజీ & ప్రసూతి\n• డా॥ ప్రశాంత్ కుమార్ M.B.B.S., DNB - జనరల్ మెడిసిన్ & క్రిటికల్ కేర్\n• డా॥ మస్తాన్ వలి షేక్ M.B.B.S., DCH - పీడియాట్రిక్స్ (చిన్నపిల్లల నిపుణులు)\n• డా॥ అవినాష్ M.S., Ortho - ఆర్థోపెడిక్స్ (ఎముకలు, కీళ్ళు)\n• డా॥ మౌషిమీ MD - రేడియాలజిస్ట్ (అల్ట్రాసౌండ్ స్కానింగ్)\n• డా॥ ఎస్. సుబ్బరాజు M.S. - జనరల్ & లాప్రోస్కోపిక్ సర్జరీ\n\nమీరు ఎవరి వద్ద అపాయింట్‌మెంట్ తీసుకోవాలనుకుంటున్నారు?'
     },
     {
       keywords: ['free', 'camp', 'scan', 'స్కానింగ్', 'ఉచిత', 'ఆఫర్', 'offer', 'sugar', 'షుగర్'],
@@ -269,7 +327,7 @@ function initChatbox() {
     },
     {
       keywords: ['aarogyasri', 'aarogya', 'insurance', 'ఆరోగ్యశ్రీ', 'ఇన్సూరెన్స్', 'ehs', 'cashless', 'నగదు రహిత'],
-      replyEn: 'Yes! We proudly accept:\n✅ Dr. YSR Aarogyasri\n✅ E.H.S. (Employees Health Scheme)\n✅ 100% Cashless Health Insurance for all leading private & public TPAs (Star Health, HDFC Ergo, ICICI Lombard, Care Health, Medi Assist, etc.).\nCall 9391131013 for insurance desk assistance.',
+      replyEn: 'Yes! We proudly accept:\n✅ Dr. YSR Aarogyasri\n✅ E.H.S. (Govt Employees Health Scheme)\n✅ 100% Cashless Health Insurance for all leading TPAs (Star Health, HDFC Ergo, ICICI Lombard, Care Health, Medi Assist, etc.).\nCall 9391131013 for insurance desk assistance.',
       replyTe: 'అవును! మా వద్ద:\n✅ డా॥ వైఎస్సార్ ఆరోగ్యశ్రీ సేవలు\n✅ E.H.S. (ఉద్యోగుల హెల్త్ స్కీమ్)\n✅ అన్ని ప్రముఖ కంపెనీల హెల్త్ ఇన్సూరెన్స్ కార్డులు గల వారికి 100% నగదు రహిత (Cashless) వైద్య సేవలు అందుబాటులో ఉన్నాయి.\nవివరాలకు 9391131013 కు కాల్ చేయండి.'
     },
     {
@@ -301,7 +359,7 @@ function initChatbox() {
       waLink.className = 'btn-header-whatsapp';
       waLink.style.marginTop = '10px';
       waLink.style.display = 'inline-flex';
-      waLink.innerHTML = '💬 వాట్సాప్‌లో మాట్లాడండి';
+      waLink.innerHTML = '💬 WhatsApp లో మాట్లాడండి';
       msg.appendChild(waLink);
     }
 
@@ -318,7 +376,7 @@ function initChatbox() {
     const lower = userText.toLowerCase();
 
     // Find match
-    let match = knowledgeBase.find(kb => 
+    const match = knowledgeBase.find(kb => 
       kb.keywords.some(k => lower.includes(k.toLowerCase()))
     );
 
@@ -328,8 +386,8 @@ function initChatbox() {
         appendMessage(reply, 'bot', true);
       } else {
         const defaultReply = currentLang === 'te'
-          ? `ధన్యవాదాలు! మీ ప్రశ్నకు సరైన సమాధానం కోసం మా హాస్పిటల్ రిసెప్షన్ లేదా వాట్సాప్ హెల్ప్‌లైన్ (+91 9391131013) ను సంప్రదించవచ్చు.`
-          : `Thank you! For more details or direct assistance, please contact our 24/7 hospital reception or WhatsApp at +91 9391131013.`;
+          ? `ధన్యవాదాలు! మీ ప్రశ్నకు సమాధానం కొరకు మా హాస్పిటల్ రిసెప్షన్ లేదా వాట్సాప్ హెల్ప్‌లైన్ (+91 9391131013) ను సంప్రదించండి.`
+          : `Thank you! For direct assistance, please contact our 24/7 reception or WhatsApp helpline at +91 9391131013.`;
         appendMessage(defaultReply, 'bot', true);
       }
     }, 400);
@@ -354,7 +412,7 @@ function initChatbox() {
 }
 
 /* ==========================================================================
-   6. IMAGE LIGHTBOX (Brochures & Campus Showcase)
+   8. IMAGE LIGHTBOX (Brochures Zoom)
    ========================================================================== */
 function initLightbox() {
   const modal = document.getElementById('lightboxModal');
@@ -395,4 +453,3 @@ window.bookFreeCamp = function(campType) {
     }
   }
 };
-
