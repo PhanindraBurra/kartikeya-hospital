@@ -1,0 +1,19 @@
+{
+  "name": "satya-sri-kartikeya-hospital",
+  "version": "1.0.0",
+  "description": "Official Website for Satya Sri Kartikeya Multi Speciality Hospital, Jaggampeta",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "hospital",
+    "kartikeya",
+    "healthcare",
+    "jaggampeta",
+    "aarogyasri"
+  ],
+  "author": "Satya Sri Kartikeya Hospital",
+  "license": "ISC"
+}
+
