@@ -1,16 +1,17 @@
 /**
  * SATYA SRI KARTIKEYA MULTI SPECIALITY HOSPITAL
- * Interactive Application Scripts (Delta Hospitals Inspired Standard)
+ * Interactive Application Scripts (Delta Hospitals Architecture)
  * ----------------------------------------------------
  * Features:
  * 1. IntersectionObserver Scroll Reveal Animations (fade-up, fade-left, fade-right, zoom-in)
- * 2. Doctor Specialty Category Filter Tabs (Gynecology, Medicine, Pediatrics, Orthopedics, Radiology, Surgery)
- * 3. AI / Hospital Virtual Assistant Chatbox (Bilingual Telugu & English)
- * 4. Instant Appointment Booking with WhatsApp dispatch to +91 9391131013
- * 5. Free Health Camp Appointment Scheduler
- * 6. Lightbox for Official Posters & Brochures
- * 7. Dynamic Bilingual Switcher (English <-> Telugu)
- * 8. Responsive Mobile Navigation
+ * 2. Animated Counter Numbers (0 -> 6+, 0 -> 24/7, 0 -> ₹1100, 0 -> 100%)
+ * 3. Doctor Specialty Category Filter Tabs (Gynecology, Medicine, Pediatrics, Orthopedics, Radiology, Surgery)
+ * 4. AI / Hospital Virtual Assistant Chatbox (Bilingual Telugu & English)
+ * 5. Instant Appointment Booking with WhatsApp dispatch to +91 9391131013
+ * 6. Free Health Camp Appointment Scheduler
+ * 7. Lightbox for Official Posters & Brochures
+ * 8. Dynamic Bilingual Switcher (English <-> Telugu)
+ * 9. Responsive Mobile Navigation
  */
 
 // Global Hospital Configuration
@@ -22,6 +23,7 @@ const GOOGLE_MAPS_LINK = 'https://share.google/5C07fv22zy8TrJrzH';
 
 document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
+  initCounterAnimation();
   initDoctorFilter();
   initMobileNav();
   initLanguageSwitcher();
@@ -62,7 +64,45 @@ function initScrollAnimations() {
 }
 
 /* ==========================================================================
-   2. DOCTOR SPECIALTY FILTER TABS
+   2. ANIMATED NUMBER COUNTERS (On Viewport Scroll)
+   ========================================================================== */
+function initCounterAnimation() {
+  const counters = document.querySelectorAll('.counter-num[data-target]');
+  if (!counters.length) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = +counter.getAttribute('data-target');
+        const prefix = counter.getAttribute('data-prefix') || '';
+        const suffix = counter.getAttribute('data-suffix') || '';
+        const duration = 1400; // ms
+        const steps = 35;
+        const stepTime = Math.abs(Math.floor(duration / steps));
+        const increment = target / steps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = prefix + target + suffix;
+            clearInterval(timer);
+          } else {
+            counter.textContent = prefix + Math.floor(current) + suffix;
+          }
+        }, stepTime);
+
+        obs.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  counters.forEach(c => observer.observe(c));
+}
+
+/* ==========================================================================
+   3. DOCTOR SPECIALTY FILTER TABS
    ========================================================================== */
 function initDoctorFilter() {
   const filterBtns = document.querySelectorAll('.filter-tab-btn');
@@ -91,7 +131,7 @@ function initDoctorFilter() {
 }
 
 /* ==========================================================================
-   3. MOBILE NAVIGATION
+   4. MOBILE NAVIGATION
    ========================================================================== */
 function initMobileNav() {
   const toggleBtn = document.getElementById('mobileNavToggle');
@@ -115,7 +155,7 @@ function initMobileNav() {
 }
 
 /* ==========================================================================
-   4. BILINGUAL LANGUAGE SWITCHER (English <-> Telugu)
+   5. BILINGUAL LANGUAGE SWITCHER (English <-> Telugu)
    ========================================================================== */
 let currentLang = 'te'; // Telugu default for regional demographic
 
@@ -144,7 +184,7 @@ function initLanguageSwitcher() {
 }
 
 /* ==========================================================================
-   5. APPOINTMENT BOOKING & WHATSAPP DISPATCH
+   6. APPOINTMENT BOOKING & WHATSAPP DISPATCH
    ========================================================================== */
 function initBookingSystem() {
   const bookingForm = document.getElementById('appointmentForm');
@@ -253,7 +293,7 @@ function initBookingSystem() {
 }
 
 /* ==========================================================================
-   6. DOCTOR CARDS DIRECT BOOKING TRIGGER
+   7. DOCTOR CARDS DIRECT BOOKING TRIGGER
    ========================================================================== */
 function initDoctorBookingButtons() {
   document.querySelectorAll('.btn-doc-book').forEach(btn => {
@@ -290,7 +330,7 @@ function initDoctorBookingButtons() {
 }
 
 /* ==========================================================================
-   7. AI / VIRTUAL ASSISTANT CHATBOX
+   8. AI / VIRTUAL ASSISTANT CHATBOX
    ========================================================================== */
 function initChatbox() {
   const launcher = document.getElementById('chatLauncher');
@@ -412,7 +452,7 @@ function initChatbox() {
 }
 
 /* ==========================================================================
-   8. IMAGE LIGHTBOX (Brochures Zoom)
+   9. IMAGE LIGHTBOX (Brochures Zoom)
    ========================================================================== */
 function initLightbox() {
   const modal = document.getElementById('lightboxModal');
