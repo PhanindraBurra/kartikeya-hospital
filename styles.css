@@ -73,6 +73,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -80,7 +84,11 @@ body {
   background-color: #F8FCFD;
   color: var(--color-peacock-deep);
   line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Telugu language typography tuning */
@@ -127,20 +135,25 @@ button {
   border-bottom: 1px solid rgba(0, 210, 196, 0.2);
   position: relative;
   z-index: 1000;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .top-bar-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .top-bar-left {
   display: flex;
   align-items: center;
-  gap: 14px;
-  white-space: nowrap;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .emergency-pill {
@@ -155,12 +168,14 @@ button {
   font-size: 0.76rem;
   letter-spacing: 0.5px;
   animation: pulse-danger 2s infinite;
+  white-space: nowrap;
 }
 
 .top-hotline {
   color: var(--color-peacock-cyan);
   font-weight: 800;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .top-location {
@@ -169,13 +184,14 @@ button {
   gap: 5px;
   color: #94A3B8;
   font-size: 0.82rem;
+  white-space: nowrap;
 }
 
 .top-bar-right {
   display: flex;
   align-items: center;
-  gap: 14px;
-  white-space: nowrap;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .insurance-badge-mini {
@@ -2439,20 +2455,260 @@ button {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 16px;
+    padding: 0 14px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Top Emergency Bar Mobile Tuning */
+  .top-emergency-bar {
+    padding: 5px 0;
   }
 
   .top-bar-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .top-location {
+    display: none !important; /* Hide address in top bar on mobile to prevent overflow */
+  }
+
+  .emergency-pill {
+    padding: 2px 7px;
+    font-size: 0.72rem;
+  }
+
+  .top-hotline {
+    font-size: 0.78rem;
+  }
+
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .insurance-badge-mini {
+    padding: 2px 8px;
+    font-size: 0.72rem;
+  }
+
+  .lang-switch-btn {
+    padding: 2px 8px;
+    font-size: 0.72rem;
+  }
+
+  /* Header & Brand Mobile Tuning */
+  .header-inner {
+    padding: 8px 0;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .brand-wrapper {
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .brand-logo-frame {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .brand-titles {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .brand-name {
+    font-size: 0.98rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    display: block;
+  }
+
+  .brand-tagline {
+    font-size: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    display: block;
+  }
+
+  .header-actions {
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .btn-header-book {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .mobile-nav-toggle {
+    padding: 4px;
+    font-size: 1.35rem;
+  }
+
+  /* Hero Section Mobile Tuning */
+  .hero-intro-section {
+    padding: 32px 0 44px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .hero-intro-section::before,
+  .hero-intro-section::after {
+    display: none !important; /* Completely remove off-canvas blur orbs on mobile */
+  }
+
+  .hero-badge-pill {
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    margin-bottom: 14px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .hero-main-title-te {
+    font-size: 1.6rem;
+    line-height: 1.25;
+    word-break: break-word;
+  }
+
+  .hero-subtitle-motto {
+    font-size: 0.88rem;
+    padding: 6px 10px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .hero-badges-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .hero-mini-badge {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  .hero-actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .hero-actions-group .btn-primary-glow,
+  .hero-actions-group .btn-whatsapp-hero,
+  .hero-actions-group .btn-secondary-outline {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+  }
+
+  .hero-image-wrapper {
+    max-width: 100%;
+  }
+
+  .hero-image-wrapper img {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .hero-floating-badge {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .hero-bottom-info-pill {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px 12px;
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    padding: 4px 0;
   }
 
-  .top-bar-left, .top-bar-right {
+  .h-pill-btn {
+    align-self: flex-start;
+    font-size: 0.76rem;
+    padding: 4px 10px;
+  }
+
+  .hero-counters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-top: 16px;
+  }
+
+  .counter-num {
+    font-size: 1.4rem;
+  }
+
+  /* Section Spacings on Mobile */
+  .section-camp-offers,
+  .section-doctors,
+  .section-departments,
+  .section-insurance,
+  .section-booking,
+  .section-instagram,
+  .section-brochure,
+  .section-location {
+    padding: 48px 0;
     width: 100%;
-    justify-content: space-between;
-    font-size: 0.78rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .section-header-center {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+    line-height: 1.3;
+  }
+
+  .section-desc {
+    font-size: 0.9rem;
   }
 
   .camp-cards-grid,
@@ -2466,88 +2722,73 @@ button {
   .location-grid,
   .footer-grid {
     grid-template-columns: 1fr;
-  }
-
-  .section-camp-offers,
-  .section-doctors,
-  .section-departments,
-  .section-insurance,
-  .section-booking,
-  .section-instagram,
-  .section-brochure,
-  .section-location {
-    padding: 55px 0;
-  }
-
-  .hero-intro-section {
-    padding: 40px 0 50px;
-  }
-
-  .hero-main-title-te {
-    font-size: 1.75rem;
-    line-height: 1.28;
-  }
-
-  .hero-badges-row {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .hero-counters {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding-top: 16px;
-  }
-
-  .counter-num {
-    font-size: 1.45rem;
-  }
-
-  .hero-actions-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .hero-actions-group .btn-primary-glow,
-  .hero-actions-group .btn-whatsapp-hero,
-  .hero-actions-group .btn-secondary-outline {
+    gap: 20px;
     width: 100%;
-    justify-content: center;
-    text-align: center;
-    padding: 12px 18px;
-    font-size: 0.95rem;
+    max-width: 100%;
+  }
+
+  .doctor-photo-wrap {
+    height: 250px;
+  }
+
+  .doctor-card-body {
+    padding: 18px;
+  }
+
+  .doctor-name-te {
+    font-size: 1.2rem;
+  }
+
+  .doctor-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .btn-doc-book, .btn-doc-wa {
+    padding: 9px 8px;
+    font-size: 0.8rem;
   }
 
   .insurance-card-wrapper {
-    padding: 26px 18px;
+    padding: 22px 16px;
   }
 
   .insurance-main-heading h2 {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
   }
 
   .insurance-helpdesk-btn {
     width: 100%;
     justify-content: center;
+    font-size: 0.88rem;
+    padding: 10px 16px;
   }
 
   .booking-info-panel {
-    padding: 26px 18px;
+    padding: 22px 16px;
   }
 
   .booking-info-panel h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+  }
+
+  .booking-direct-call {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .bdc-info a {
+    font-size: 1.15rem;
   }
 
   .booking-form-card {
-    padding: 26px 18px;
+    padding: 22px 16px;
   }
 
   .form-group-row {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .form-actions {
@@ -2559,28 +2800,64 @@ button {
   .form-select,
   .form-textarea {
     font-size: 16px; /* Prevents auto-zoom on mobile iOS devices */
+    padding: 10px 12px;
+  }
+
+  .instagram-profile-banner {
+    padding: 18px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .ig-profile-left {
+    gap: 12px;
+    width: 100%;
+  }
+
+  .ig-follow-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 18px;
+    font-size: 0.86rem;
+  }
+
+  .brochure-thumb-wrap {
+    height: 260px;
   }
 
   .location-info-card {
-    padding: 24px 18px;
+    padding: 20px 16px;
   }
 
   .location-map-wrapper {
-    min-height: 320px;
+    min-height: 300px;
   }
 
   .map-floating-overlay {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
-    padding: 12px 16px;
+    gap: 8px;
+    padding: 10px 14px;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
   }
 
   .btn-gmaps-link {
     width: 100%;
     justify-content: center;
+    font-size: 0.8rem;
+    padding: 7px 12px;
   }
 
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  /* Floating Widgets Safe Margins */
   .floating-whatsapp-pill span {
     display: none;
   }
@@ -2593,76 +2870,67 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: 20px;
-    left: 16px;
+    bottom: 18px;
+    left: 14px;
     box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    z-index: 998;
   }
 
   .chat-launcher-btn {
-    bottom: 20px;
-    right: 16px;
-    width: 52px;
-    height: 52px;
+    bottom: 18px;
+    right: 14px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+    z-index: 999;
   }
 
   .chat-widget-panel {
-    bottom: 82px;
-    right: 12px;
-    left: 12px;
+    bottom: 76px;
+    right: 10px;
+    left: 10px;
     width: auto;
     max-width: none;
-    height: calc(100vh - 100px);
-    max-height: 520px;
+    height: calc(100vh - 90px);
+    max-height: 500px;
   }
 }
 
-@media (max-width: 480px) {
-  .header-inner {
-    padding: 10px 0;
-  }
-
+@media (max-width: 420px) {
   .brand-logo-frame {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+    height: 38px;
   }
 
   .brand-name {
-    font-size: 1.02rem;
+    font-size: 0.9rem;
+    max-width: 135px;
   }
 
   .brand-tagline {
-    font-size: 0.65rem;
-    letter-spacing: 0.3px;
+    font-size: 0.55rem;
+    max-width: 135px;
   }
 
   .btn-header-book {
-    padding: 6px 12px;
-    font-size: 0.78rem;
+    padding: 5px 9px;
+    font-size: 0.74rem;
   }
 
   .hero-main-title-te {
-    font-size: 1.5rem;
+    font-size: 1.42rem;
   }
 
   .hero-subtitle-motto {
-    font-size: 0.9rem;
-    padding: 6px 10px;
-  }
-
-  .hero-image-wrapper img {
-    height: 240px;
+    font-size: 0.84rem;
   }
 
   .section-title {
-    font-size: 1.65rem;
+    font-size: 1.5rem;
   }
 
-  .doctor-photo-wrap {
-    height: 250px;
-  }
-
-  .brochure-thumb-wrap {
-    height: 250px;
+  .doctor-actions {
+    grid-template-columns: 1fr;
   }
 }
 
