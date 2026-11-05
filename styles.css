@@ -2750,9 +2750,9 @@ button {
   }
 
   /* USER REQUEST: In mobile:
-     1) Top phone number comes on the LEFT (not in middle)
+     1) Top phone number comes on the RIGHT (above the hamburger menu)
      2) Remove "Book Appointment" button from header
-     3) Add at the right that three lines (hamburger menu toggle ☰) */
+     3) Keep the three lines hamburger toggle on the right */
   .top-emergency-bar {
     padding: 7px 0;
     background: var(--brand-midnight);
@@ -2761,7 +2761,7 @@ button {
 
   .top-bar-inner {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
     padding: 0 16px;
@@ -2769,12 +2769,12 @@ button {
 
   .top-bar-left {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
-    width: auto;
+    width: 100%;
     margin: 0;
     gap: 0;
-    text-align: left;
+    text-align: right;
   }
 
   .emergency-pill,
@@ -2795,7 +2795,8 @@ button {
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    text-align: left;
+    text-align: right;
+    margin-left: auto;
   }
 
   .top-hotline::before {
