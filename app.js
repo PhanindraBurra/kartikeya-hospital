@@ -161,8 +161,8 @@ function initMobileNav() {
       toggleBtn.innerHTML = isOpen ? '✕' : '☰';
     });
 
-    // Close menu when clicking nav links
-    navMenu.querySelectorAll('.nav-link').forEach(link => {
+    // Close menu when clicking nav links or mobile book button
+    navMenu.querySelectorAll('.nav-link, .btn-nav-book-mobile').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         toggleBtn.innerHTML = '☰';

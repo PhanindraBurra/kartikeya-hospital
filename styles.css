@@ -388,6 +388,10 @@ button {
   box-shadow: 0 8px 24px rgba(0, 210, 196, 0.55);
 }
 
+.mobile-menu-cta {
+  display: none;
+}
+
 .mobile-nav-toggle {
   display: none;
   background: transparent;
@@ -2650,12 +2654,54 @@ button {
     display: flex;
   }
 
-  .mobile-nav-toggle {
+  .mobile-menu-cta {
     display: block;
+    width: 100%;
+    margin-top: 8px;
   }
 
-  .header-actions .btn-header-whatsapp {
-    display: none;
+  .btn-nav-book-mobile {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--brand-midnight);
+    background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-cyan) 100%);
+    box-shadow: 0 4px 14px rgba(0, 210, 196, 0.35);
+  }
+
+  .mobile-nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(14, 116, 144, 0.25);
+    border: 1.5px solid rgba(0, 210, 196, 0.5);
+    color: #FFFFFF;
+    font-size: 1.65rem;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+    transition: var(--transition);
+  }
+
+  .mobile-nav-toggle:hover,
+  .mobile-nav-toggle:active {
+    background: var(--brand-teal);
+    border-color: var(--brand-cyan);
+    color: #FFFFFF;
+  }
+
+  .header-actions .btn-header-whatsapp,
+  .header-actions .btn-header-book {
+    display: none !important;
   }
 
   .hero-grid {
@@ -2703,29 +2749,32 @@ button {
     max-width: 100%;
   }
 
-  /* USER REQUEST: In mobile, remove 24/7 emergency, helpline, arogya sree, english.
-     Show ONLY the main top number cleanly! */
+  /* USER REQUEST: In mobile:
+     1) Top phone number comes on the LEFT (not in middle)
+     2) Remove "Book Appointment" button from header
+     3) Add at the right that three lines (hamburger menu toggle ☰) */
   .top-emergency-bar {
-    padding: 6px 0;
+    padding: 7px 0;
     background: var(--brand-midnight);
     border-bottom: 1px solid rgba(0, 210, 196, 0.25);
   }
 
   .top-bar-inner {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
-    padding: 0;
+    padding: 0 16px;
   }
 
   .top-bar-left {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: auto;
     margin: 0;
     gap: 0;
+    text-align: left;
   }
 
   .emergency-pill,
@@ -2738,13 +2787,15 @@ button {
   }
 
   .top-hotline {
-    font-size: 0.96rem;
+    font-size: 0.95rem;
     font-weight: 800;
     color: var(--brand-cyan);
-    letter-spacing: 0.6px;
+    letter-spacing: 0.5px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
+    text-align: left;
   }
 
   .top-hotline::before {
@@ -2754,36 +2805,89 @@ button {
 
   .header-inner {
     padding: 8px 0;
-    gap: 6px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .brand-wrapper {
-    gap: 8px;
-    max-width: calc(100% - 110px);
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    max-width: calc(100% - 56px);
+    display: flex;
+    align-items: center;
   }
 
   .brand-logo-frame {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+  }
+
+  .brand-titles {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .brand-name {
-    font-size: 0.92rem;
-    max-width: 160px;
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: var(--text-white);
+    line-height: 1.2;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .brand-tagline {
-    font-size: 0.55rem;
-    max-width: 160px;
+    font-size: 0.58rem;
+    color: var(--brand-cyan);
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  .header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
   .btn-header-book {
-    padding: 6px 12px;
-    font-size: 0.76rem;
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(14, 116, 144, 0.25);
+    border: 1.5px solid rgba(0, 210, 196, 0.5);
+    color: #FFFFFF;
+    font-size: 1.65rem;
+    line-height: 1;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: var(--transition);
+  }
+
+  .mobile-nav-toggle:hover,
+  .mobile-nav-toggle:active {
+    background: var(--brand-teal);
+    border-color: var(--brand-cyan);
+    color: #FFFFFF;
   }
 
   .hero-section {
