@@ -1,7 +1,7 @@
 /* ==========================================================================
    SATYA SRI KARTIKEYA MULTI SPECIALITY HOSPITAL
    Modern Corporate Healthcare Theme (Delta Hospitals Architecture)
-   Strict Official Peacock Logo Color Palette & Rich Animations
+   100% English Only • Strict Official Peacock Logo Palette • Rich Animations
    ========================================================================== */
 
 :root {
@@ -50,7 +50,6 @@
 
   --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-telugu: 'Noto Sans Telugu', 'Gautami', 'Mandali', sans-serif;
 }
 
 /* ==========================================================================
@@ -82,10 +81,6 @@ body {
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
-}
-
-body.lang-te {
-  font-family: var(--font-telugu), var(--font-family);
 }
 
 img {
@@ -122,7 +117,7 @@ button {
 .top-emergency-bar {
   background: var(--brand-midnight);
   color: var(--text-white);
-  padding: 8px 0;
+  padding: 9px 0;
   font-size: 0.84rem;
   border-bottom: 1px solid rgba(0, 210, 196, 0.2);
   position: relative;
@@ -159,11 +154,23 @@ button {
   white-space: nowrap;
 }
 
+.top-helpline-label {
+  color: #CBD5E1;
+  font-weight: 600;
+}
+
 .top-hotline {
   color: var(--brand-cyan);
   font-weight: 800;
   letter-spacing: 0.4px;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.top-hotline:hover {
+  color: #FFFFFF;
 }
 
 .top-location {
@@ -189,33 +196,11 @@ button {
   font-size: 0.76rem;
   font-weight: 700;
   background: rgba(0, 210, 196, 0.12);
-  border: 1px solid rgba(0, 210, 196, 0.3);
-  padding: 3px 12px;
+  border: 1px solid rgba(0, 210, 196, 0.35);
+  padding: 4px 14px;
   border-radius: var(--radius-full);
   color: var(--brand-cyan);
   white-space: nowrap;
-}
-
-.lang-switch-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--text-white);
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-
-.lang-switch-btn:hover {
-  background: var(--brand-cyan);
-  color: var(--brand-midnight);
-  border-color: var(--brand-cyan);
 }
 
 /* ==========================================================================
@@ -261,7 +246,7 @@ button {
 }
 
 .brand-logo-frame:hover {
-  transform: rotate(5deg) scale(1.05);
+  transform: rotate(6deg) scale(1.06);
 }
 
 .brand-logo-frame img {
@@ -278,7 +263,7 @@ button {
 
 .brand-name {
   color: var(--text-white);
-  font-size: 1.15rem;
+  font-size: 1.16rem;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: 0.3px;
@@ -299,7 +284,7 @@ button {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -416,11 +401,24 @@ button {
    ========================================================================== */
 .hero-section {
   position: relative;
-  background: radial-gradient(circle at 85% 20%, rgba(0, 210, 196, 0.18) 0%, transparent 45%),
+  background: radial-gradient(circle at 85% 20%, rgba(0, 210, 196, 0.2) 0%, transparent 45%),
               linear-gradient(140deg, var(--brand-midnight) 0%, #0A3240 55%, #061F26 100%);
   color: var(--text-white);
   padding: 75px 0 95px;
   overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 210, 196, 0.18) 0%, transparent 70%);
+  top: -120px;
+  right: 15%;
+  animation: auraGlow 8s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
 .hero-grid {
@@ -449,7 +447,7 @@ button {
 }
 
 .hero-main-title {
-  font-size: 2.75rem;
+  font-size: 2.85rem;
   font-weight: 800;
   line-height: 1.18;
   color: var(--text-white);
@@ -673,7 +671,16 @@ button {
   border-radius: 50%;
   background-color: var(--brand-cyan);
   box-shadow: 0 0 10px var(--brand-cyan);
-  animation: pulse-ring 1.8s infinite;
+  position: relative;
+}
+
+.pulse-indicator::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-cyan);
+  animation: radarRing 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 /* ==========================================================================
@@ -728,7 +735,7 @@ button {
 .quick-action-card:hover .quick-icon-wrap {
   background: var(--brand-cyan);
   color: var(--brand-midnight);
-  transform: scale(1.08) rotate(5deg);
+  transform: scale(1.08) rotate(6deg);
 }
 
 .quick-card-text h4 {
@@ -1114,7 +1121,7 @@ button {
   flex-grow: 1;
 }
 
-.doctor-name-te {
+.doctor-name-en {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-white);
@@ -1265,7 +1272,7 @@ button {
 .dept-card:hover .dept-icon {
   background: var(--brand-cyan);
   color: var(--brand-midnight);
-  transform: scale(1.08);
+  transform: scale(1.08) rotate(6deg);
 }
 
 .dept-card h3 {
@@ -1595,6 +1602,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  transition: var(--transition);
 }
 
 .btn-book-submit:hover {
@@ -1613,6 +1621,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  transition: var(--transition);
 }
 
 .btn-book-whatsapp:hover {
@@ -1622,11 +1631,92 @@ button {
 }
 
 /* ==========================================================================
+   PATIENT FAQ ACCORDION (Interactive & Animated)
+   ========================================================================== */
+.section-faq {
+  padding: 85px 0;
+  background: #FFFFFF;
+}
+
+.faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.faq-item {
+  background: var(--bg-light);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.faq-item:hover,
+.faq-item.active {
+  border-color: var(--brand-cyan);
+  background: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(7, 33, 41, 0.08);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--brand-midnight);
+  text-align: left;
+  gap: 14px;
+}
+
+.faq-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-mint);
+  color: var(--brand-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+  background: var(--brand-cyan);
+  color: var(--brand-midnight);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 22px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 240px;
+  padding: 0 22px 18px 22px;
+}
+
+/* ==========================================================================
    INSTAGRAM & SOCIAL COMMUNITY HUB
    ========================================================================== */
 .section-instagram {
   padding: 85px 0;
-  background: #FFFFFF;
+  background: #F8FAFC;
 }
 
 .instagram-profile-banner {
@@ -1886,7 +1976,7 @@ button {
    ========================================================================== */
 .section-location {
   padding: 85px 0;
-  background: #F8FAFC;
+  background: #FFFFFF;
 }
 
 .location-grid {
@@ -1896,7 +1986,7 @@ button {
 }
 
 .location-info-card {
-  background: #FFFFFF;
+  background: #F8FAFC;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
   padding: 34px;
@@ -2344,6 +2434,7 @@ button {
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
   z-index: 990;
   transition: var(--transition);
+  animation: pulseWhatsapp 3s infinite;
 }
 
 .floating-whatsapp-pill:hover {
@@ -2419,7 +2510,7 @@ button {
 .token-row {
   display: flex;
   justify-content: space-between;
-  padding: 4px 0;
+  padding: 5px 0;
   font-size: 0.86rem;
   border-bottom: 1px solid var(--border-light);
 }
@@ -2487,6 +2578,12 @@ button {
   50% { transform: translateY(8px); }
 }
 
+@keyframes auraGlow {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+  50% { transform: scale(1.25) translate(30px, -20px); opacity: 0.8; }
+  100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+}
+
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 15px rgba(0, 210, 196, 0.35); }
   50% { box-shadow: 0 0 28px rgba(0, 210, 196, 0.7); }
@@ -2497,10 +2594,14 @@ button {
   50% { transform: scale(1.04); box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.8; }
+@keyframes pulseWhatsapp {
+  0%, 100% { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 8px 28px rgba(37, 211, 102, 0.75); }
+}
+
+@keyframes radarRing {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.3); opacity: 0; }
 }
 
 @keyframes btnShimmer {
@@ -2526,6 +2627,8 @@ button {
 
 /* ==========================================================================
    RESPONSIVE DESIGN (TABLET & MOBILE)
+   Mobile Spec: Remove 24/7 emergency, emergency helpline, arogya sree, english
+   Show ONLY MAIN TOP TELEPHONE NUMBER cleanly!
    ========================================================================== */
 @media (max-width: 1040px) {
   .nav-menu {
@@ -2600,28 +2703,53 @@ button {
     max-width: 100%;
   }
 
+  /* USER REQUEST: In mobile, remove 24/7 emergency, helpline, arogya sree, english.
+     Show ONLY the main top number cleanly! */
+  .top-emergency-bar {
+    padding: 6px 0;
+    background: var(--brand-midnight);
+    border-bottom: 1px solid rgba(0, 210, 196, 0.25);
+  }
+
   .top-bar-inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
   }
 
   .top-bar-left {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
+    margin: 0;
+    gap: 0;
   }
 
-  .top-location {
+  .emergency-pill,
+  .top-helpline-label,
+  .top-location,
+  .top-bar-right,
+  .insurance-badge-mini,
+  .lang-switch-btn {
     display: none !important;
   }
 
-  .top-bar-right {
-    display: flex;
+  .top-hotline {
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: var(--brand-cyan);
+    letter-spacing: 0.6px;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    gap: 6px;
+  }
+
+  .top-hotline::before {
+    content: '📞 ';
+    font-size: 0.92rem;
   }
 
   .header-inner {
@@ -2641,21 +2769,21 @@ button {
 
   .brand-name {
     font-size: 0.92rem;
-    max-width: 150px;
+    max-width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .brand-tagline {
     font-size: 0.55rem;
-    max-width: 150px;
+    max-width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .btn-header-book {
-    padding: 6px 10px;
-    font-size: 0.74rem;
+    padding: 6px 12px;
+    font-size: 0.76rem;
   }
 
   .hero-section {
@@ -2663,7 +2791,7 @@ button {
   }
 
   .hero-main-title {
-    font-size: 1.7rem;
+    font-size: 1.75rem;
     line-height: 1.25;
   }
 
@@ -2723,6 +2851,7 @@ button {
   .section-departments,
   .section-insurance,
   .section-booking,
+  .section-faq,
   .section-instagram,
   .section-brochure,
   .section-location {

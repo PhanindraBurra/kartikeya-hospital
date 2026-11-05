@@ -1,32 +1,22 @@
 /**
  * SATYA SRI KARTIKEYA MULTI SPECIALITY HOSPITAL
- * Interactive Application Scripts (Delta Hospitals Architecture)
- * ----------------------------------------------------
- * Features:
- * 1. IntersectionObserver Scroll Reveal Animations (fade-up, fade-left, fade-right, zoom-in)
- * 2. Animated Counter Numbers (0 -> 6+, 0 -> 24/7, 0 -> ₹1100, 0 -> 100%)
- * 3. Doctor Specialty Category Filter Tabs (Gynecology, Medicine, Pediatrics, Orthopedics, Radiology, Surgery)
- * 4. AI / Hospital Virtual Assistant Chatbox (Bilingual Telugu & English)
- * 5. Instant Appointment Booking with WhatsApp dispatch to +91 9391131013
- * 6. Free Health Camp Appointment Scheduler
- * 7. Lightbox for Official Posters & Brochures
- * 8. Dynamic Bilingual Switcher (English <-> Telugu)
- * 9. Responsive Mobile Navigation
+ * Modern Application Scripts (Delta Hospitals Architecture)
+ * 100% English Only • Enhanced Animations & Fast Interactive Flows
+ * -----------------------------------------------------------------
  */
 
 // Global Hospital Configuration
 const HOSPITAL_PHONE = '9391131013';
 const HOSPITAL_PHONE_INTL = '919391131013';
-const HOSPITAL_NAME_EN = 'Satya Sri Kartikeya Multi Speciality Hospital';
-const HOSPITAL_NAME_TE = 'సత్యశ్రీ కార్తికేయ మల్టీ స్పెషాలిటీ హాస్పిటల్';
+const HOSPITAL_NAME = 'Satya Sri Kartikeya Multi Speciality Hospital';
 const GOOGLE_MAPS_LINK = 'https://share.google/5C07fv22zy8TrJrzH';
 
 document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initCounterAnimation();
   initDoctorFilter();
+  initFaqAccordion();
   initMobileNav();
-  initLanguageSwitcher();
   initBookingSystem();
   initChatbox();
   initLightbox();
@@ -131,7 +121,34 @@ function initDoctorFilter() {
 }
 
 /* ==========================================================================
-   4. MOBILE NAVIGATION
+   4. INTERACTIVE PATIENT FAQ ACCORDION (Animated Toggle)
+   ========================================================================== */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (!faqItems.length) return;
+
+  faqItems.forEach(item => {
+    const questionBtn = item.querySelector('.faq-question');
+    if (questionBtn) {
+      questionBtn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('active');
+
+        // Close other FAQ items for clean accordion behavior
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+
+        // Toggle clicked item
+        item.classList.toggle('active', !isOpen);
+      });
+    }
+  });
+}
+
+/* ==========================================================================
+   5. MOBILE NAVIGATION
    ========================================================================== */
 function initMobileNav() {
   const toggleBtn = document.getElementById('mobileNavToggle');
@@ -155,36 +172,7 @@ function initMobileNav() {
 }
 
 /* ==========================================================================
-   5. BILINGUAL LANGUAGE SWITCHER (English <-> Telugu)
-   ========================================================================== */
-let currentLang = 'te'; // Telugu default for regional demographic
-
-function initLanguageSwitcher() {
-  const switchBtn = document.getElementById('langSwitchBtn');
-  if (!switchBtn) return;
-
-  switchBtn.addEventListener('click', () => {
-    currentLang = currentLang === 'te' ? 'en' : 'te';
-    document.body.classList.toggle('lang-te', currentLang === 'te');
-    switchBtn.innerHTML = currentLang === 'te' 
-      ? '🌐 <span>English</span>' 
-      : '🌐 <span>తెలుగు</span>';
-
-    // Toggle all elements with data-lang-te and data-lang-en
-    document.querySelectorAll('[data-lang-te]').forEach(el => {
-      const teText = el.getAttribute('data-lang-te');
-      const enText = el.getAttribute('data-lang-en');
-      if (currentLang === 'te' && teText) {
-        el.textContent = teText;
-      } else if (currentLang === 'en' && enText) {
-        el.textContent = enText;
-      }
-    });
-  });
-}
-
-/* ==========================================================================
-   6. APPOINTMENT BOOKING & WHATSAPP DISPATCH
+   6. APPOINTMENT BOOKING & WHATSAPP DISPATCH (100% English)
    ========================================================================== */
 function initBookingSystem() {
   const bookingForm = document.getElementById('appointmentForm');
@@ -194,7 +182,7 @@ function initBookingSystem() {
 
   if (!bookingForm) return;
 
-  // Set min date to today
+  // Set minimum date to today
   const dateInput = document.getElementById('bookDate');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];
@@ -216,7 +204,7 @@ function initBookingSystem() {
     const notes = document.getElementById('patientNotes').value.trim() || 'General Consultation';
 
     if (!name || !phone) {
-      alert('దయచేసి మీ పేరు మరియు ఫోన్ నంబర్ నమోదు చేయండి / Please enter your name and phone number.');
+      alert('Please enter your full name and phone number to proceed.');
       return;
     }
 
@@ -230,19 +218,19 @@ function initBookingSystem() {
     document.getElementById('tokenDateTime').textContent = `${date} - ${timeSlot}`;
     document.getElementById('tokenPhone').textContent = phone;
 
-    // Build prefilled WhatsApp message
+    // Build prefilled English WhatsApp message
     const waText = encodeURIComponent(
-      `*నమస్తే సత్యశ్రీ కార్తికేయ హాస్పిటల్ (Satya Sri Kartikeya Hospital)*\n\n` +
-      `నా అపాయింట్‌మెంట్ బుకింగ్ వివరాలు (Appointment Request):\n` +
-      `📋 *టోకెన్ నంబర్ (Token):* ${token}\n` +
-      `👤 *రోగి పేరు (Patient):* ${name}\n` +
-      `🎂 *వయస్సు (Age):* ${age || 'N/A'}\n` +
-      `📱 *ఫోన్ నంబర్ (Phone):* ${phone}\n` +
-      `🩺 *డాక్టర్ (Doctor):* ${doctorName}\n` +
-      `📅 *తేదీ (Date):* ${date}\n` +
-      `⏰ *సమయం (Slot):* ${timeSlot}\n` +
-      `📝 *సమస్య / వివరాలు (Reason):* ${notes}\n\n` +
-      `దయచేసి నా బుకింగ్ కన్ఫర్మ్ చేయగలరు. ధన్యవాదాలు!`
+      `*Hello Satya Sri Kartikeya Multi Speciality Hospital (Jaggampeta)*\n\n` +
+      `I would like to confirm my doctor consultation request:\n` +
+      `📋 *Token ID:* ${token}\n` +
+      `👤 *Patient Name:* ${name}\n` +
+      `🎂 *Age:* ${age || 'N/A'} yrs\n` +
+      `📱 *Phone Number:* ${phone}\n` +
+      `🩺 *Doctor / Department:* ${doctorName}\n` +
+      `📅 *Appointment Date:* ${date}\n` +
+      `⏰ *Preferred Slot:* ${timeSlot}\n` +
+      `📝 *Reason / Notes:* ${notes}\n\n` +
+      `Please confirm my appointment slot. Thank you!`
     );
 
     const waUrl = `https://wa.me/${HOSPITAL_PHONE_INTL}?text=${waText}`;
@@ -265,11 +253,11 @@ function initBookingSystem() {
       const age = document.getElementById('patientAge').value.trim() || 'N/A';
 
       const waText = encodeURIComponent(
-        `*నమస్తే కార్తికేయ హాస్పిటల్!*\nనేను డాక్టర్ *${doctorName}* గారి వద్ద అపాయింట్‌మెంట్ బుక్ చేసుకోవాలనుకుంటున్నాను.\n` +
-        `👤 పేరు: ${name} (Age: ${age})\n` +
-        `📅 తేదీ: ${date}\n` +
-        `⏰ సమయం: ${timeSlot}\n` +
-        `దయచేసి వివరాలు తెలియజేయగలరు.`
+        `*Hello Satya Sri Kartikeya Hospital!*\nI would like to book a consultation with *${doctorName}*.\n` +
+        `👤 Patient Name: ${name} (Age: ${age})\n` +
+        `📅 Date: ${date}\n` +
+        `⏰ Preferred Time: ${timeSlot}\n` +
+        `Please share appointment details.`
       );
       window.open(`https://wa.me/${HOSPITAL_PHONE_INTL}?text=${waText}`, '_blank');
     });
@@ -322,7 +310,7 @@ function initDoctorBookingButtons() {
       const docName = btn.getAttribute('data-doctor');
       const dept = btn.getAttribute('data-dept');
       const text = encodeURIComponent(
-        `నమస్తే డాక్టర్! నేను కార్తికేయ హాస్పిటల్ లో *${docName}* (${dept}) గారి కన్సల్టేషన్ గురించి వివరాలు తెలుసుకోవాలనుకుంటున్నాను.`
+        `Hello Doctor! I would like to enquire about consultation with *${docName}* (${dept}) at Satya Sri Kartikeya Hospital, Jaggampeta.`
       );
       window.open(`https://wa.me/${HOSPITAL_PHONE_INTL}?text=${text}`, '_blank');
     });
@@ -330,7 +318,7 @@ function initDoctorBookingButtons() {
 }
 
 /* ==========================================================================
-   8. AI / VIRTUAL ASSISTANT CHATBOX
+   8. AI / VIRTUAL ASSISTANT CHATBOX (100% English)
    ========================================================================== */
 function initChatbox() {
   const launcher = document.getElementById('chatLauncher');
@@ -353,37 +341,31 @@ function initChatbox() {
     panel.classList.remove('active');
   });
 
-  // Knowledge Base for the Assistant
+  // Comprehensive English Knowledge Base
   const knowledgeBase = [
     {
-      keywords: ['doctor', 'specialist', 'డాక్టర్', 'వైద్యులు', 'లిస్ట్', 'డైరెక్టరీ', 'gynecologist', 'pediatrician', 'ortho', 'surgeon'],
-      replyEn: 'Our Senior Medical Specialists:\n• Dr. Surekha M.S., (OBG) - Gynecology & Maternity\n• Dr. Prashanth Kumar M.B.B.S., DNB - General Medicine & Critical Care\n• Dr. Masthan Vali Shaik M.B.B.S., DCH - Pediatrics & Child Specialist\n• Dr. Avinash M.S., Ortho - Bone & Joint Care\n• Dr. Moushmi MD - Radiologist & Ultrasound\n• Dr. S. Subbaraju M.S. - General & Laparoscopic Surgery\n\nWould you like to book an appointment?',
-      replyTe: 'కార్తికేయ హాస్పిటల్ నిపుణులైన వైద్యులు:\n• డా॥ సురేఖ M.S., (OBG) - గైనకాలజీ & ప్రసూతి\n• డా॥ ప్రశాంత్ కుమార్ M.B.B.S., DNB - జనరల్ మెడిసిన్ & క్రిటికల్ కేర్\n• డా॥ మస్తాన్ వలి షేక్ M.B.B.S., DCH - పీడియాట్రిక్స్ (చిన్నపిల్లల నిపుణులు)\n• డా॥ అవినాష్ M.S., Ortho - ఆర్థోపెడిక్స్ (ఎముకలు, కీళ్ళు)\n• డా॥ మౌషిమీ MD - రేడియాలజిస్ట్ (అల్ట్రాసౌండ్ స్కానింగ్)\n• డా॥ ఎస్. సుబ్బరాజు M.S. - జనరల్ & లాప్రోస్కోపిక్ సర్జరీ\n\nమీరు ఎవరి వద్ద అపాయింట్‌మెంట్ తీసుకోవాలనుకుంటున్నారు?'
+      keywords: ['doctor', 'specialist', 'specialists', 'list', 'consultant', 'gynecologist', 'pediatrician', 'ortho', 'surgeon', 'physician', 'radiologist'],
+      reply: 'Our Senior Medical Specialists at Satya Sri Kartikeya Hospital:\n\n• Dr. Surekha M.S. (OBG) – Consultant Obstetrician & Gynecologist\n• Dr. Prashanth Kumar M.B.B.S., DNB – General Medicine & Critical Care\n• Dr. Masthan Vali Shaik M.B.B.S., DCH – Pediatrician & Child Specialist\n• Dr. Avinash M.S. (Ortho) – Orthopedic & Joint Surgeon\n• Dr. Moushmi MD – Radiologist (Ultrasound & Diagnostic Imaging)\n• Dr. S. Subbaraju M.S. – General & Laparoscopic Surgeon\n\nWould you like to book an appointment with any doctor?'
     },
     {
-      keywords: ['free', 'camp', 'scan', 'స్కానింగ్', 'ఉచిత', 'ఆఫర్', 'offer', 'sugar', 'షుగర్'],
-      replyEn: 'Free Launch Offers & Camp Schedule:\n🎁 FREE OP Consultations for 1 full month!\n🤰 FREE Ultrasound Scans (worth ₹1100) for pregnancy & abdomen every Monday, Thursday & Saturday!\n🩸 FREE Fasting & PP Blood Sugar Tests + Free OP every Wednesday!\n👶 FREE Pediatric OP & Fever Tests every Friday!',
-      replyTe: 'విశేష ఉచిత వైద్య శిబిరాలు & ఆఫర్లు:\n🎁 నెల రోజుల పాటు అన్ని ఓ.పి (OP) పూర్తిగా ఉచితం!\n🤰 రూ. 1100/- విలువ గల పొట్ట & గర్భిణీ స్త్రీలకు అల్ట్రాసౌండ్ స్కానింగ్ పూర్తిగా ఉచితం (ప్రతి సోమ, గురు, శనివారాలు)!\n🩸 ఉచిత షుగర్ టెస్ట్లు (Fasting & PP) + ఉచిత OP (ప్రతి బుధవారం)!\n👶 చిన్నపిల్లల ఉచిత OP & జ్వర పరీక్షలు (ప్రతి శుక్రవారం)!'
+      keywords: ['free', 'camp', 'scan', 'offer', 'sugar', 'checkup', 'discount'],
+      reply: 'Inaugural Free Launch Offers & Health Camps:\n\n🎁 100% FREE OP Consultations for 1 full month across all departments!\n🤰 FREE Ultrasound Scans (worth ₹1100) for pregnancy & abdomen every Monday, Thursday & Saturday!\n🩸 FREE Fasting & Post-Prandial Blood Sugar Tests + Free OP every Wednesday!\n👶 FREE Pediatric Checkup & Fever Blood Tests every Friday!'
     },
     {
-      keywords: ['aarogyasri', 'aarogya', 'insurance', 'ఆరోగ్యశ్రీ', 'ఇన్సూరెన్స్', 'ehs', 'cashless', 'నగదు రహిత'],
-      replyEn: 'Yes! We proudly accept:\n✅ Dr. YSR Aarogyasri\n✅ E.H.S. (Govt Employees Health Scheme)\n✅ 100% Cashless Health Insurance for all leading TPAs (Star Health, HDFC Ergo, ICICI Lombard, Care Health, Medi Assist, etc.).\nCall 9391131013 for insurance desk assistance.',
-      replyTe: 'అవును! మా వద్ద:\n✅ డా॥ వైఎస్సార్ ఆరోగ్యశ్రీ సేవలు\n✅ E.H.S. (ఉద్యోగుల హెల్త్ స్కీమ్)\n✅ అన్ని ప్రముఖ కంపెనీల హెల్త్ ఇన్సూరెన్స్ కార్డులు గల వారికి 100% నగదు రహిత (Cashless) వైద్య సేవలు అందుబాటులో ఉన్నాయి.\nవివరాలకు 9391131013 కు కాల్ చేయండి.'
+      keywords: ['aarogyasri', 'aarogya', 'insurance', 'ehs', 'cashless', 'star health', 'hdfc', 'icici', 'care health', 'claim'],
+      reply: 'Yes! We proudly offer 100% Cashless Healthcare:\n\n✅ Dr. YSR Aarogyasri (Full coverage for eligible families)\n✅ AP Govt Employees Health Scheme (EHS)\n✅ Empanelled with all leading private insurance TPAs (Star Health, HDFC Ergo, ICICI Lombard, Care Health, Medi Assist, etc.).\n\nCall our insurance desk at +91 9391131013 for immediate pre-authorization assistance.'
     },
     {
-      keywords: ['location', 'address', 'ఎక్కడ', 'అడ్రస్', 'maps', 'దారి', 'route', 'jaggampeta'],
-      replyEn: '📍 Hospital Address:\nSatya Sri Kartikeya Multi Speciality Hospital\n(Formerly Satyakrishna Hospital Premises)\nDoor No. 3-212/2, NH-16, Neeladrirao Peta, Jaggampeta, Kakinada District, AP - 533435.\n\nPhone: 9391131013\nOpen 24/7 for Emergency & Casualty.',
-      replyTe: '📍 హాస్పిటల్ చిరునామా:\nసత్యశ్రీ కార్తికేయ మల్టీ స్పెషాలిటీ హాస్పిటల్\n(మన జగ్గంపేట సత్యకృష్ణ గారి హాస్పిటల్ వద్ద)\nడోర్ నెం: 3-212/2, NH-16, నీలాద్రిరావు పేట, జగ్గంపేట, కాకినాడ జిల్లా, ఆంధ్రప్రదేశ్ - 533435.\n\nఫోన్: 9391131013\nఎమర్జెన్సీ & ప్రమాద చికిత్స 24 గంటలు అందుబాటులో ఉంటాయి.'
+      keywords: ['location', 'address', 'where', 'maps', 'directions', 'reach', 'jaggampeta'],
+      reply: '📍 Hospital Address:\nSatya Sri Kartikeya Multi Speciality Hospital\n(Formerly Satyakrishna Hospital Premises)\nDoor No. 3-212/2, NH-16 National Highway, Neeladrirao Peta, Jaggampeta, Kakinada District, Andhra Pradesh - 533435.\n\nHelpline: +91 9391131013\nOpen 24/7 for Emergency & Casualty.'
     },
     {
-      keywords: ['emergency', 'call', 'ambulance', 'ఎమర్జెన్సీ', 'అంబులెన్స్', 'నంబర్', 'phone', 'contact'],
-      replyEn: '🚨 24/7 Emergency & Ambulance Helpline:\nCall immediately: +91 9391131013 or +91 9441931333.\nOur trauma & critical care team is available 24 hours every day.',
-      replyTe: '🚨 24/7 ఎమర్జెన్సీ & అంబులెన్స్ హెల్ప్‌లైన్:\nవెంటనే సంప్రదించండి: +91 9391131013 లేదా +91 9441931333.\nమా ఎమర్జెన్సీ మరియు ఐసియు బృందం 24 గంటలూ సిద్ధంగా ఉంది.'
+      keywords: ['emergency', 'ambulance', 'call', 'casualty', 'night', 'contact', 'phone', 'hotline'],
+      reply: '🚨 24/7 Emergency Casualty & Ambulance Hotline:\nCall immediately: +91 9391131013 or +91 9441931333.\nOur trauma care team, ICU physicians, and emergency surgical OT are active 24 hours every day.'
     },
     {
-      keywords: ['book', 'appointment', 'అపాయింట్‌మెంట్', 'బుకింగ్', 'టైమింగ్స్', 'timings', 'slot'],
-      replyEn: 'You can book an appointment directly through our online form below, or send us a WhatsApp message at +91 9391131013.\nOP Timings: 9:00 AM - 2:00 PM & 5:00 PM - 9:00 PM.',
-      replyTe: 'మీరు క్రింది ఆన్‌లైన్ ఫారమ్ ద్వారా లేదా మా వాట్సాప్ (+91 9391131013) ద్వారా సులభంగా అపాయింట్‌మెంట్ బుక్ చేసుకోవచ్చు.\nఓ.పి సమయాలు: ఉదయం 9:00 నుండి మధ్యాహ్నం 2:00 వరకు & సాయంత్రం 5:00 నుండి రాత్రి 9:00 వరకు.'
+      keywords: ['book', 'appointment', 'op', 'timings', 'slot', 'schedule', 'fee'],
+      reply: 'How to Book an Appointment:\n1. Use the online form on this page to get an instant token ID.\n2. Or message us directly on WhatsApp at +91 9391131013.\n\nOPD Consultation Hours:\n• Morning: 9:30 AM - 1:30 PM\n• Evening: 5:00 PM - 8:30 PM\n• 24/7 Emergency Casualty is always open.'
     }
   ];
 
@@ -394,12 +376,12 @@ function initChatbox() {
 
     if (hasWhatsAppBtn) {
       const waLink = document.createElement('a');
-      waLink.href = `https://wa.me/${HOSPITAL_PHONE_INTL}?text=${encodeURIComponent('నమస్తే కార్తికేయ హాస్పిటల్! నాకు వైద్య సలహా / అపాయింట్‌మెంట్ కావాలి.')}`;
+      waLink.href = `https://wa.me/${HOSPITAL_PHONE_INTL}?text=${encodeURIComponent('Hello Satya Sri Kartikeya Hospital! I need medical assistance / appointment.')}`;
       waLink.target = '_blank';
       waLink.className = 'btn-header-whatsapp';
       waLink.style.marginTop = '10px';
       waLink.style.display = 'inline-flex';
-      waLink.innerHTML = '💬 WhatsApp లో మాట్లాడండి';
+      waLink.innerHTML = '💬 Chat on WhatsApp';
       msg.appendChild(waLink);
     }
 
@@ -422,15 +404,12 @@ function initChatbox() {
 
     setTimeout(() => {
       if (match) {
-        const reply = currentLang === 'te' ? match.replyTe : match.replyEn;
-        appendMessage(reply, 'bot', true);
+        appendMessage(match.reply, 'bot', true);
       } else {
-        const defaultReply = currentLang === 'te'
-          ? `ధన్యవాదాలు! మీ ప్రశ్నకు సమాధానం కొరకు మా హాస్పిటల్ రిసెప్షన్ లేదా వాట్సాప్ హెల్ప్‌లైన్ (+91 9391131013) ను సంప్రదించండి.`
-          : `Thank you! For direct assistance, please contact our 24/7 reception or WhatsApp helpline at +91 9391131013.`;
+        const defaultReply = 'Thank you for reaching out! For detailed medical consultation or immediate assistance, please connect with our 24/7 reception desk or WhatsApp helpline at +91 9391131013.';
         appendMessage(defaultReply, 'bot', true);
       }
-    }, 400);
+    }, 350);
   }
 
   sendBtn.addEventListener('click', () => handleUserInput(input.value));
@@ -482,14 +461,14 @@ function initLightbox() {
   });
 }
 
-// Global quick booking helper for Free Camps
+// Global quick booking helper for Free Launch Camps
 window.bookFreeCamp = function(campType) {
   const bookingSec = document.getElementById('appointment-booking');
   if (bookingSec) {
     bookingSec.scrollIntoView({ behavior: 'smooth' });
     const notes = document.getElementById('patientNotes');
     if (notes) {
-      notes.value = `Booking for Special Launch Offer: ${campType}`;
+      notes.value = `Booking for Special Launch Privilege: ${campType}`;
     }
   }
 };
