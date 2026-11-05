@@ -161,11 +161,22 @@ function initMobileNav() {
       toggleBtn.innerHTML = isOpen ? '✕' : '☰';
     });
 
-    // Close menu when clicking nav links or mobile book button
+    // Close menu when clicking nav links or mobile book button and scroll to section
     navMenu.querySelectorAll('.nav-link, .btn-nav-book-mobile').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
         navMenu.classList.remove('active');
         toggleBtn.innerHTML = '☰';
+
+        if (href && href.startsWith('#') && href.length > 1) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            setTimeout(() => {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }, 60);
+          }
+        }
       });
     });
   }

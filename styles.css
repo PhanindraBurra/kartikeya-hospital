@@ -83,6 +83,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Smooth Anchor Scrolling & Sticky Header Offset */
+section[id],
+div[id],
+header[id],
+footer[id] {
+  scroll-margin-top: 105px;
+}
+
+@media (max-width: 768px) {
+  section[id],
+  div[id],
+  header[id],
+  footer[id] {
+    scroll-margin-top: 92px;
+  }
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -204,16 +221,81 @@ button {
 }
 
 /* ==========================================================================
+   STICKY HEADER WRAPPER (Top Bar + Main Navigation Header)
+   Freezes both top emergency notification bar and main navbar at top of viewport
+   ========================================================================== */
+.site-header-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+/* Top Notification Bar Social Actions */
+.top-social-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.btn-top-wa {
+  background: rgba(37, 211, 102, 0.16);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.45);
+}
+
+.btn-top-wa:hover,
+.btn-top-wa:active {
+  background: #25D366;
+  color: #072129;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4);
+}
+
+.btn-top-ig {
+  background: rgba(225, 48, 108, 0.16);
+  color: #FF548F;
+  border: 1px solid rgba(225, 48, 108, 0.45);
+}
+
+.btn-top-ig:hover,
+.btn-top-ig:active {
+  background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCAF45);
+  color: #FFFFFF;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(225, 48, 108, 0.4);
+}
+
+.top-social-svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
    NAVIGATION HEADER
    ========================================================================== */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   background: rgba(7, 33, 41, 0.98);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(0, 210, 196, 0.25);
-  z-index: 999;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
@@ -2750,31 +2832,52 @@ button {
   }
 
   /* USER REQUEST: In mobile:
-     1) Top phone number comes on the RIGHT (above the hamburger menu)
-     2) Remove "Book Appointment" button from header
-     3) Keep the three lines hamburger toggle on the right */
+     1) Top bar: Left side has WhatsApp & Instagram symbols (clickable to accounts)
+     2) Top bar: Right side has phone number (📞 +91 9391131013)
+     3) Header below has logo on left and three lines (☰) toggle on right
+     4) Frozen sticky header with scroll-margin-top for visible section headers */
   .top-emergency-bar {
-    padding: 7px 0;
+    padding: 6px 0;
     background: var(--brand-midnight);
     border-bottom: 1px solid rgba(0, 210, 196, 0.25);
   }
 
   .top-bar-inner {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 0 16px;
+  }
+
+  .top-social-nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  .top-social-btn {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+
+  .top-social-text {
+    font-size: 0.72rem;
+    font-weight: 700;
   }
 
   .top-bar-left {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
+    width: auto;
     margin: 0;
+    margin-left: auto;
     gap: 0;
     text-align: right;
+    order: 2;
   }
 
   .emergency-pill,
@@ -2787,21 +2890,22 @@ button {
   }
 
   .top-hotline {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 800;
     color: var(--brand-cyan);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     text-decoration: none;
     text-align: right;
     margin-left: auto;
+    white-space: nowrap;
   }
 
   .top-hotline::before {
     content: '📞 ';
-    font-size: 0.92rem;
+    font-size: 0.88rem;
   }
 
   .header-inner {
@@ -3073,5 +3177,20 @@ button {
     max-width: none;
     height: calc(100vh - 90px);
     max-height: 500px;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-social-text {
+    display: none;
+  }
+
+  .top-social-btn {
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+
+  .top-hotline {
+    font-size: 0.86rem;
   }
 }
